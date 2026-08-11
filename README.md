@@ -4,6 +4,8 @@
 
 An AI-powered **2D → 3D drone-show visualization** pipeline. Upload a single image, reconstruct a textured 3D mesh with [Stable Fast 3D (SF3D)](https://github.com/Stability-AI/stable-fast-3d), stage a glowing drone-swarm formation in Blender, and play back the rendered MP4 in a local web UI.
 
+![DR.ONE web frontend](demo_files/frontend_screenshot.png)
+
 > Powered by Stability AI · Built for research, demos, and creative exploration.
 
 ---
