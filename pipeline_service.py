@@ -27,6 +27,8 @@ from definitions import (
     RENDER_DIR,
     RUN_SCRIPT,
     UPLOAD_DIR,
+    bgd_path_for_blender,
+    bgd_relative,
 )
 
 logger = logging.getLogger(__name__)
@@ -128,9 +130,13 @@ def run_blender_render(
         )
     if not os.path.isfile(BLENDER_SCRIPT):
         raise FileNotFoundError(f"Blender script not found: {BLENDER_SCRIPT}")
-    if not os.path.isfile(BGD_BLEND_PATH):
+
+    bgd = bgd_path_for_blender()
+    if not bgd or not os.path.isfile(BGD_BLEND_PATH or ""):
         raise FileNotFoundError(
-            f"Night-sky background blend missing: {BGD_BLEND_PATH}"
+            "Night-sky background .blend not found. Place a file under "
+            "blender/assets/scenes/night_sky/ (e.g. night_env1.blend) "
+            "or set DRONE_BGD_PATH in .env."
         )
 
     stem = Path(image_path).stem
@@ -148,12 +154,13 @@ def run_blender_render(
         "--mesh_path",
         mesh_path,
         "--bgd_path",
-        BGD_BLEND_PATH,
+        bgd,
         "--bgd_object",
         BGD_OBJECT_NAME,
         "--render_name",
         stem,
     ]
+    logger.info("Using background asset: %s", bgd_relative())
     _run_logged(cmd, "blender", on_progress)
 
     video_path = os.path.join(RENDER_DIR, stem, f"{stem}.mp4")

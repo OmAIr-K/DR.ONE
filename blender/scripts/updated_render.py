@@ -6,10 +6,10 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 from definitions import (
-    BGD_BLEND_PATH,
     BGD_OBJECT_NAME,
     OUTPUT_DIR,
     RENDER_DIR,
+    bgd_path_for_blender,
 )
 
 
@@ -21,10 +21,11 @@ def parse_args():
     else:
         argv = []
 
+    default_bgd = bgd_path_for_blender()
     args = {
         "input_image": None,
         "mesh_path": None,
-        "bgd_path": BGD_BLEND_PATH,
+        "bgd_path": default_bgd,
         "bgd_object": BGD_OBJECT_NAME,
         "render_name": None,
     }
@@ -492,7 +493,10 @@ def animate_object_movement(obj, start_z, target_height, duration, speed, pause_
             keyframe.interpolation = 'LINEAR'
             
 def append_bgd(bgd_filepath, object_name=BGD_OBJECT_NAME):
-    bgd_filepath = bgd_filepath.replace("\\", "/")
+    if not bgd_filepath:
+        print("No background path provided; skipping night-sky append.")
+        return
+    bgd_filepath = str(bgd_filepath).replace("\\", "/")
     if not os.path.isfile(bgd_filepath):
         raise FileNotFoundError(f"Background blend not found: {bgd_filepath}")
     directory = bgd_filepath + "/Object/"
@@ -603,7 +607,10 @@ create_camera_360_view(obj, radius, camera_duration, takeoff_positions, vertex_p
 
 bpy.context.scene.camera = bpy.data.objects['360_Camera']
 
-append_bgd(cli["bgd_path"], cli["bgd_object"])
+if cli["bgd_path"]:
+    append_bgd(cli["bgd_path"], cli["bgd_object"])
+else:
+    print("Skipping background append (DRONE_BGD_PATH / night_sky asset not set).")
 
 # Render Video
 if cli["render_name"]:

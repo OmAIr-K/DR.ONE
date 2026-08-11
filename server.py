@@ -17,7 +17,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from definitions import RENDER_DIR, UPLOAD_DIR, BLENDER_EXECUTABLE, BGD_BLEND_PATH
+from definitions import (
+    RENDER_DIR,
+    UPLOAD_DIR,
+    BLENDER_EXECUTABLE,
+    BGD_BLEND_PATH,
+    bgd_relative,
+)
 from pipeline_service import JobResult, JobStatus, run_full_pipeline, save_upload
 
 logging.basicConfig(
@@ -99,14 +105,13 @@ def _execute_pipeline(job_id: str, image_path: str) -> None:
 @app.get("/api/health")
 def health():
     blender_ok = bool(BLENDER_EXECUTABLE) and os.path.isfile(BLENDER_EXECUTABLE)
-    bgd_ok = os.path.isfile(BGD_BLEND_PATH.replace("/", os.sep))
+    bgd_ok = bool(BGD_BLEND_PATH) and os.path.isfile(BGD_BLEND_PATH)
     return {
         "status": "ok" if blender_ok and bgd_ok else "degraded",
         "service": "DR.ONE",
         "blender_found": blender_ok,
-        "blender_path": BLENDER_EXECUTABLE,
         "background_found": bgd_ok,
-        "background_path": BGD_BLEND_PATH,
+        "background_asset": bgd_relative(),
     }
 
 

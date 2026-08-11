@@ -10,11 +10,17 @@ import sys
 import bpy
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-from definitions import BGD_BLEND_PATH, BGD_OBJECT_NAME
+from definitions import BGD_OBJECT_NAME, bgd_path_for_blender
 
 
-def append_bgd(bgd_filepath=BGD_BLEND_PATH, object_name=BGD_OBJECT_NAME):
-    bgd_filepath = bgd_filepath.replace("\\", "/")
+def append_bgd(bgd_filepath=None, object_name=BGD_OBJECT_NAME):
+    bgd_filepath = bgd_filepath or bgd_path_for_blender()
+    if not bgd_filepath:
+        raise FileNotFoundError(
+            "No background .blend found. Set DRONE_BGD_PATH or add a file under "
+            "blender/assets/scenes/night_sky/."
+        )
+    bgd_filepath = str(bgd_filepath).replace("\\", "/")
     if not os.path.isfile(bgd_filepath):
         raise FileNotFoundError(f"Background blend not found: {bgd_filepath}")
     directory = bgd_filepath + "/Object/"

@@ -334,13 +334,15 @@ Copy `.env.example` to `.env`:
 # Required if Blender is not on PATH / not in a default install location
 DRONE_BLENDER_PATH=C:\Program Files\Blender Foundation\Blender 4.2\blender.exe
 
-# Optional: object name inside night_env1.blend (default: Water)
-DRONE_BGD_OBJECT=Water
+# Optional — override auto-discovered night-sky asset
+# DRONE_BGD_PATH=blender/assets/scenes/night_sky/night_env1.blend
+# DRONE_BGD_OBJECT=Water
 ```
 
 | Variable | Default | Meaning |
 |----------|---------|---------|
 | `DRONE_BLENDER_PATH` | Auto-discover | Absolute path to Blender executable |
+| `DRONE_BGD_PATH` | Auto-discover under `blender/assets/scenes/night_sky/` | Custom night-sky `.blend` (absolute or repo-relative) |
 | `DRONE_BGD_OBJECT` | `Water` | Object appended from the night-sky `.blend` |
 
 Paths for uploads, outputs, and renders are defined in `definitions.py`.
