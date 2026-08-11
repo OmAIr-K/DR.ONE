@@ -163,7 +163,59 @@ cython_debug/
 
 # Slang
 .slangtorch_cache
-*.lock
+
+# Local env
+.env
 
 stabilityai/
 output/
+uploads/
+input/
+frontend/node_modules/
+frontend/dist/
+
+# Blender generated / local experiment artifacts (keep scripts + night_sky asset)
+blender/animations/*
+!blender/animations/.gitkeep
+blender/projects/
+blender/**/*.blend1
+blender/untitled.blend
+blender/untitled.blend1
+blender/jet_drones.blend
+blender/jet_drones.blend1
+blender/processing_model.blend
+blender/processing_model.blend1
+blender/processing_model2.blend
+blender/processing_model2.blend1
+blender/updated_code.blend
+blender/updated_code.blend1
+blender/updated_code_drones.blend
+blender/updated_code_final.blend
+blender/updated_code_final.blend1
+blender/test for render.blend
+blender/test for render.blend1
+blender/lambo.001.obj
+blender/lambo.001.mtl
+blender/script
+blender/assets/scenes/night_sky/extras/
+
+# Optional local brand/demo dumps (tracked SF3D examples stay in demo_files/examples)
+demo_files/examples/C[0-9].png
+demo_files/examples/MBR.png
+demo_files/examples/MBZ.jpg
+demo_files/examples/MRAM.jpg
+demo_files/examples/etisalat.jpeg
+demo_files/examples/google_logo.jpeg
+demo_files/examples/hp.jpeg
+demo_files/examples/huawei.jpeg
+demo_files/examples/intel.jpeg
+demo_files/examples/jet_plane.jpeg
+demo_files/examples/kia.jpeg
+demo_files/examples/mango.jpeg
+demo_files/examples/mbs.jpg
+demo_files/examples/mbs2.png
+demo_files/examples/no_bgd_*.png
+demo_files/examples/orange-car.jpeg
+demo_files/examples/saudi_palm.jpeg
+demo_files/examples/x.jpeg
+

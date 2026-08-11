@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DR.ONE — Image to Drone Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="brand">
+        <p class="brand__mark">DR.ONE</p>
+        <h1 class="brand__title">Turn one photo into a drone-show film</h1>
+        <p class="brand__sub">
+          Upload a single image. Stable Fast 3D rebuilds the subject, Blender
+          stages the swarm animation, and you get a rendered visualization back.
+        </p>
+      </header>
+
+      <section class="stage" id="stage">
+        <div class="upload" id="dropzone">
+          <input
+            type="file"
+            id="file-input"
+            accept="image/png,image/jpeg,image/webp,image/bmp,image/gif"
+            hidden
+          />
+          <div class="upload__visual" aria-hidden="true">
+            <span class="orbit"></span>
+            <span class="orbit orbit--delay"></span>
+          </div>
+          <p class="upload__label">Drop an image here</p>
+          <p class="upload__hint">PNG, JPG, WEBP — or click to browse</p>
+          <button type="button" class="btn btn--ghost" id="browse-btn">
+            Choose image
+          </button>
+        </div>
+
+        <aside class="preview" id="preview-panel" hidden>
+          <img id="preview-image" alt="Selected upload preview" />
+          <div class="preview__meta">
+            <p id="file-name"></p>
+            <button type="button" class="btn btn--primary" id="process-btn">
+              Generate visualization
+            </button>
+            <button type="button" class="btn btn--ghost" id="reset-btn">
+              Use another image
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="status" id="status-panel" hidden>
+        <div class="status__head">
+          <p class="status__phase" id="status-phase">Queued</p>
+          <p class="status__pct" id="status-pct">0%</p>
+        </div>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
+          <div class="progress__fill" id="progress-fill"></div>
+        </div>
+        <p class="status__msg" id="status-message">Waiting to start…</p>
+        <details class="logs">
+          <summary>Processing log</summary>
+          <pre id="log-output"></pre>
+        </details>
+      </section>
+
+      <section class="result" id="result-panel" hidden>
+        <h2>Your visualization</h2>
+        <video id="result-video" controls playsinline></video>
+        <div class="result__actions">
+          <a class="btn btn--primary" id="download-link" download>Download MP4</a>
+          <button type="button" class="btn btn--ghost" id="again-btn">
+            Process another image
+          </button>
+        </div>
+      </section>
+
+      <p class="powered">Powered by Stability AI · Stable Fast 3D</p>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
